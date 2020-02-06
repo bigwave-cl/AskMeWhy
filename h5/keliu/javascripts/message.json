@@ -1,0 +1,32 @@
+{
+    "ok": true,
+    "servertime": 1515726480,
+    "message": [
+        {
+            "id": "2",
+            "type": "0",
+            "title": "官方推送消息1",
+            "content": "官方推送消息官方推送消息官方推送消息官方推送消息官方推送消息"
+        },
+        {
+            "id": "3",
+            "type": "1",
+            "title": "官方推送消息图文2",
+            "picture": "http://ofopl9abq.bkt.clouddn.com/2018caption.jpg",
+            "content": "<p>官方推送消息</p><p>官方推送消息</p><div>官方推送消息官方推送消息官方推送消息</div>"
+        },
+        {
+            "id": "4",
+            "type": "1",
+            "title": "官方推送消息图文3",
+            "picture": "http://ofopl9abq.bkt.clouddn.com/2018caption.jpg",
+            "content": "<p>官方推送消息</p><p>官方推送消息</p><div>官方推送消息官方推送消息官方推送消息</div>"
+        },
+        {
+            "id": "5",
+            "type": "0",
+            "title": "官方推送消息4",
+            "content": "官方推送消息官方推送消息官方推送消息官方推送消息官方推送消息"
+        }
+    ]
+}

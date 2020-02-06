@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#303B4F">
+	<meta content="telephone=no" name="format-detection" />
+	<meta content="email=no" name="format-detection" />
+	<meta name="apple-mobile-web-app-title" content="took-web">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="x5-orientation" content="portrait" />
+	<meta name="x5-fullscreen" content="true" />
+	<meta name="x5-page-mode" content="app" />
+	<meta name="HandheldFriendly" content="true">
+	<meta name="MobileOptimized" content="320">
+	<meta name="screen-orientation" content="portrait">
+	<meta name="x5-orientation" content="portrait">
+	<meta name="full-screen" content="yes">
+	<meta name="browsermode" content="application">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta name="msapplication-TileColor" content="#303B4F" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta http-equiv="Pragma" content="no-cache">
+	<!-- SEO优化 -->
+	<title>客流分析</title>
+	<meta name="description" content="客流分析">
+	<meta name="author" content="陈龙">
+	<meta name="robots" content="index,follow">
+	<link rel="stylesheet" type="text/css" href="./stylesheets/base.css">
+	<link rel="stylesheet" type="text/css" href="./stylesheets/ask-modal.css">
+	<link rel="stylesheet" type="text/css" href="./stylesheets/index.css">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div id="app">
+			<header class="passenger-flow-header">
+				<div class="plh-title">客流量</div>
+				<div class="plh-title num" v-text="analysis">0</div>
+				<div class="plh-category">
+					<div class="plh-cgroup">
+						<div class="text">新客(人)</div>
+						<div class="text num" v-text="guest.new">0</div>
+					</div>
+					<div class="plh-cgroup">
+						<div class="text">老客(人)</div>
+						<div class="text num" v-text="guest.old">0</div>
+					</div>
+				</div>
+			</header>
+			<div class="passenger-flow-bar">
+				<div class="text">5分钟内客流
+					<span class="num" v-text="analysisNum">0</span>
+				</div>
+			</div>
+			<section class="passenger-flow-body">
+				<div class="plb-group">
+					<div class="plb-gtitle">
+						<div class="plb-gbtns">
+							<button type="button" :class="{active: type == 1}" @click="changeType(1)">今天</button>
+							<button type="button" :class="{active: type == 2}" @click="changeType(2)">近一周</button>
+						</div>
+					</div>
+					<div class="plb-gbody">
+						<div class="plb-gbtitle">
+							<div class="line-bar">客流量</div>
+							<div class="solid-squar" data-word="客" v-text="customerFlowPeople"></div>
+						</div>
+						<div class="plb-gbchart" id="customer_flow"></div>
+					</div>
+				</div>
+				<div class="plb-group">
+					<div class="plb-gbody">
+						<div class="plb-gbtitle">
+							<div class="line-bar">新老客</div>
+							<div>
+								<div class="solid-squar gray" data-word="新" v-text="customerNumberPeople.new"></div>
+								<div class="solid-squar" data-word="老" v-text="customerNumberPeople.old"></div>
+							</div>
+						</div>
+						<div class="plb-gbchart" id="customer_number"></div>
+					</div>
+				</div>
+				<div class="plb-group">
+					<div class="plb-gbody">
+						<div class="plb-gbtitle">
+							<div class="line-bar">品牌</div>
+						</div>
+						<div class="plb-gbchart">
+							<div class="plb-gpie">
+								<div class="plb-gpbox" id="brand_count"></div>
+							</div>
+							<div class="plb-glabel">
+								<template v-for="(i,$i) in brandCount">
+									<div class="plb-gonce" :key="$i">
+										<div class="name" :style="{background:($i + 1) < brandColor.length ? brandColor[$i]: brandColor[0]}" :data-word="i.name"></div>
+										<div class="bar">
+											<div class="bar-radius">
+												<div class="bar-value" :style="{width: (i.value/brandAllNumber).toFixed(2)*100 + '%',
+															background:($i + 1) < brandColor.length ? brandColor[$i]: brandColor[0]} ">
+												</div>
+											</div>
+										</div>
+										<div class="percent" v-text="(i.value/brandAllNumber).toFixed(2) * 100 + '%'"></div>
+									</div>
+								</template>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="plb-group">
+					<div class="plb-gbody">
+						<div class="plb-gbtitle">
+							<div class="line-bar">雷达扫描</div>
+						</div>
+						<div class="plb-gbchart">
+							<div class="plb-gpie">
+								<div class="radar-scanning">
+									<div class="radar-part" :class="{play:radarPaly,pause:!radarPaly}"></div>
+								</div>
+							</div>
+							<div class="plb-glabel radar">
+								<div class="text">共扫描附近人数</div>
+								<div class="text">
+									<span v-text="radarPeople"></span>人</div>
+								<div class="btns">
+									<button type="button" :disabled="radarPaly" @click="startRadar">开始扫描</button>
+									<button type="button" :disabled="radarPeople <= 0" @click="sendMessage">发送消息</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<div class="ask-loader" v-show="loader">
+				<div class="ask-loader-overlay"></div>
+				<div class="ask-loader-body">
+					<div class="circle large"></div>
+					<div class="circle small"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./javascripts/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script type="text/javascript" src="./javascripts/echarts.min.js"></script>
+	<script type="text/javascript" src="./javascripts/utils.js"></script>
+	<script>
+	var ACCESS_TOKEN = "b5badcc2b8dd67cdd132b2f55086184a",
+		W_ID = 164,
+		SIGN = "",
+		BASE_URL = "http://testmob.to-ok.com.cn/page/web-app/api";
+	var app = new Vue({
+		el: '#app',
+		data: {
+			loader: false,
+			type: 1,
+			analysis: 0,
+			analysisNum: 0,
+			guest: {
+				new: 0,
+				old: 0
+			},
+			radarPaly: false,
+			radarPeople: 0,
+			customerFlowPeople: 0,
+			customerFlowData: [],
+			customerNumberPeople: {
+				old: 0,
+				new: 0
+			},
+			customerNumber: [],
+			brandColor: ['#ff7b7b', '#007d90', '#00bfe6', '#c88fb6', '#a2dcb6', '#ffc107', '#538135'],
+			brandCount: [],
+			customerFlowInstance: null,
+			customerNumberInstance: null,
+			brandCountInstance: null,
+		},
+		computed: {
+			brandAllNumber: function() {
+				var _number = 0;
+				if (this.brandCount.length > 0) {
+					this.brandCount.forEach(function(item) {
+						_number += Number(item.value);
+					})
+				}
+				return _number;
+			}
+		},
+		mounted: function() {
+
+			//客流量图表
+			this.customerFlowEchart();
+			//新老客户数量图表
+			this.customerNumberEchart();
+			//品牌统计图表
+			this.brandCountEchart();
+
+			this.initData();
+		},
+		methods: {
+			sendMessage: function() {
+				window.location.href = "./send-message.html";
+			},
+			amountFormat: function(num) {
+				var num = (num || 0).toString().replace(/\,/g, "").split('\.'),
+					result = '';
+				while (num[0].length > 3) {
+					result = ',' + num[0].slice(-3) + result;
+					num[0] = num[0].slice(0, num[0].length - 3);
+				}
+				if (num[0]) { result = num[0] + result; }
+				if (num.length > 1) result += '.' + num[1];
+				return result;
+			},
+			changeType: function(value) {
+				this.type = value;
+				this.initData();
+			},
+			initData: function() {
+				var url = this.type == 1 ? 　'./javascripts/day.json' : './javascripts/week.json';
+				this.loader = true;
+				$.ajax({
+					url: url,
+					type: "GET",
+					data: {
+						"method": "user_probe",
+						"type": this.type,
+						"access_token": ACCESS_TOKEN,
+						"wid": W_ID,
+						"sign": SIGN
+					},
+					dataType: "json",
+				}).then(function(r) {
+					this.loader = false;
+					if (!r || !r.ok) {
+						askToast.spread("网络请求错误");
+						return;
+					}
+					this.analysis = this.amountFormat(r.data.total);
+					this.analysisNum = r.data.m5;
+					this.guest.new = this.amountFormat(r.data.newer);
+					this.guest.old = this.amountFormat(r.data.older);
+					this.customerFlowData = r.data.flux;
+					this.customerNumber = r.data.consumer;
+					this.brandCount = r.data.brand;
+					this.customerFlowInstance.refreshEchart();
+					this.customerNumberInstance.refreshEchart();
+					this.brandCountInstance.refreshEchart();
+				}.bind(this), function(error) {
+					this.loader = false;
+					askToast.spread("网络请求错误");
+				}.bind(this));
+			},
+			startRadar: function() {
+				this.radarPeople = 0;
+				this.radarPaly = true;
+				setTimeout(function() {
+					this.radarPaly = false;
+					this.radarPeople = 10;
+				}.bind(this), 5000);
+			},
+			//客流量图表
+			customerFlowEchart: function() {
+				var dom = document.getElementById("customer_flow");
+				this.customerFlowInstance = echarts.init(dom);
+				var xAxisArr = [],
+					data = [];
+				this.customerFlowData.forEach(function(item) {
+					xAxisArr.push(item.time)
+					data.push(item.total)
+				})
+				var option = {
+					color: ['#3c78e3'],
+					grid: {
+						top: '3%',
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: xAxisArr,
+						axisTick: {
+							show: false,
+							alignWithLabel: true
+						},
+						axisLine: {
+							lineStyle: {
+								color: "#dedee4",
+								width: 2
+							}
+						},
+						axisLabel: {
+							color: "#999"
+						},
+						axisPointer: {
+							snap: true,
+							lineStyle: {
+								color: '#467DE6',
+								opacity: 1,
+								width: 2
+							},
+							label: {
+								show: false,
+								formatter: function(params) {
+									var _index = this.customerFlowData.findIndex(function(c) {
+										return c.time == params.value;
+									})
+									if (_index == -1) return;
+									this.customerFlowPeople = this.customerFlowData[_index].total;
+								}.bind(this)
+							},
+							handle: {
+								show: true
+							}
+						},
+						splitLine: {
+							show: false
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						axisLabel: {
+							color: "#999"
+						},
+						axisTick: {
+							show: false
+						},
+						axisLine: {
+							lineStyle: {
+								color: "#dedee4",
+								width: 2
+							}
+						},
+						splitLine: {
+							lineStyle: {
+								color: "#dedee4",
+								width: 1,
+								type: "dashed"
+							}
+						}
+					}],
+					series: [{
+						type: 'bar',
+						barWidth: '10px',
+						data: data,
+						label: {
+							normal: {
+								show: false
+							}
+						},
+						avoidLabelOverlap: false,
+						hoverAnimation: false
+					}]
+				};
+				this.customerFlowInstance.setOption(option, true);
+				this.customerFlowInstance.refreshEchart = function() {
+					var option = this.customerFlowInstance.getOption();
+					var xAxisArr = [],
+						data = [];
+					this.customerFlowData.forEach(function(item) {
+						xAxisArr.push(item.time)
+						data.push(item.total)
+					})
+					option.xAxis[0].data = xAxisArr;
+					option.series[0].data = data;
+					this.customerFlowInstance.setOption(option);
+				}.bind(this);
+			},
+			//新老客户数量图表
+			customerNumberEchart: function() {
+				var dom = document.getElementById("customer_number");
+				this.customerNumberInstance = echarts.init(dom);
+				var xAxisArr = [],
+					oldData = [],
+					newData = [];
+				this.customerNumber.forEach(function(item) {
+					xAxisArr.push(item.time);
+					oldData.push(item.older);
+					newData.push(item.newer);
+				})
+				var option = {
+					color: ['#3c78e3'],
+					grid: {
+						top: '3%',
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: xAxisArr,
+						axisTick: {
+							show: false,
+							alignWithLabel: true
+						},
+						axisLine: {
+							lineStyle: {
+								color: "#dedee4",
+								width: 2
+							}
+						},
+						axisLabel: {
+							color: "#999"
+						},
+						axisPointer: {
+							snap: true,
+							lineStyle: {
+								color: '#467DE6',
+								opacity: 1,
+								width: 2
+							},
+							label: {
+								show: false,
+								formatter: function(params) {
+									var _index = this.customerNumber.findIndex(function(c) {
+										return c.time == params.value;
+									})
+									if (_index == -1) return;
+									this.customerNumberPeople.old = this.customerNumber[_index].older;
+									this.customerNumberPeople.new = this.customerNumber[_index].newer;
+								}.bind(this)
+							},
+							handle: {
+								show: true
+							}
+						},
+						splitLine: {
+							show: false
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						axisLabel: {
+							color: "#999"
+						},
+						axisTick: {
+							show: false
+						},
+						axisLine: {
+							lineStyle: {
+								color: "#dedee4",
+								width: 2
+							}
+						},
+						splitLine: {
+							lineStyle: {
+								color: "#dedee4",
+								width: 1,
+								type: "dashed"
+							}
+						}
+					}],
+					series: [{
+						type: 'bar',
+						barWidth: '10px',
+						barGap: "-100%",
+						data: newData,
+						label: {
+							normal: {
+								show: false
+							}
+						},
+						itemStyle: {
+							normal: {
+								color: "#91adfa"
+							}
+						},
+						avoidLabelOverlap: false,
+						hoverAnimation: false
+					}, {
+						type: 'bar',
+						barWidth: '10px',
+						data: oldData,
+						label: {
+							normal: {
+								show: false
+							}
+						},
+						avoidLabelOverlap: false,
+						hoverAnimation: false
+					}]
+				};
+				this.customerNumberInstance.setOption(option, true);
+				this.customerNumberInstance.refreshEchart = function() {
+					var option = this.customerNumberInstance.getOption();
+					var xAxisArr = [],
+						oldData = [],
+						newData = [];
+					this.customerNumber.forEach(function(item) {
+						xAxisArr.push(item.time);
+						oldData.push(item.older);
+						newData.push(item.newer);
+					})
+					option.xAxis[0].data = xAxisArr;
+					option.series[0].data = newData;
+					option.series[1].data = oldData;
+					this.customerNumberInstance.setOption(option);
+				}.bind(this);
+			},
+			//品牌统计图表
+			brandCountEchart: function() {
+				var dom = document.getElementById("brand_count");
+				this.brandCountInstance = echarts.init(dom);
+				var data = [],
+					radius = [0, 0];
+				radius[0] = this.brandCountInstance.getWidth() * 0.25;
+				radius[1] = radius[0] + 30;
+				this.brandCount.forEach(function(item, index) {
+					data.push({
+						value: item.value,
+						itemStyle: {
+							normal: {
+								color: (index + 1) > this.brandColor.length ? this.brandColor[0] : this.brandColor[index]
+							}
+						}
+					});
+				}.bind(this))
+				var option = {
+					color: ['#3c78e3'],
+					grid: {
+						top: '3%',
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					series: [{
+						type: 'pie',
+						silent : true,
+						radius: radius,
+						startAngle: 90,
+						data: data,
+						label: {
+							normal: {
+								show: false
+							}
+						},
+						itemStyle: {
+							normal: {
+								borderWidth: 3,
+								borderColor: '#ffffff',
+							},
+							emphasis: {
+								borderWidth: 3,
+								borderColor: '#ffffff',
+							}
+						}
+					}]
+				};
+				this.brandCountInstance.setOption(option, true);
+				this.brandCountInstance.refreshEchart = function() {
+					var option = this.brandCountInstance.getOption();
+					var data = [],
+						radius = [0, 0];
+					radius[0] = this.brandCountInstance.getWidth() * 0.25;
+					radius[1] = radius[0] + 30;
+					this.brandCount.forEach(function(item, index) {
+						data.push({
+							value: item.value,
+							itemStyle: {
+								normal: {
+									color: (index + 1) > this.brandColor.length ? this.brandColor[0] : this.brandColor[index]
+								}
+							}
+						});
+					}.bind(this))
+					option.series[0].radius = radius;
+					option.series[0].data = data;
+					this.brandCountInstance.setOption(option);
+				}.bind(this);
+			}
+		}
+	});
+
+	</script>
+</body>
+
+</html>

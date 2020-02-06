@@ -1,0 +1,36 @@
+body, html {
+  height: 100%;
+}
+*{
+  margin: 0px;
+  padding: 0px;
+}
+.falling-leaves {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.leaf-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+.leaf-scene div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 47px;
+  height: 17px;
+  background: url(sy.png) no-repeat;
+  background-size: 100%;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-backface-visibility: visible;
+          backface-visibility: visible;
+}

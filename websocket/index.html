@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>WebSocket Echo Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="icon" href="./favicon.ico">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="container">
+                <ul class="nav-list">
+                    <li>
+                        <div class="logo">AskMeWhy</div>
+                    </li>
+                    <li>
+                        <div class="text">实时聊天</div>
+                    </li>
+                    <li>
+                        <div class="text"><a href="" target="_blank">源码下载</a></div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="chat">
+            <div class="container">
+                <div class="form-group">
+                    <div class="nick-name">
+                        <span>当前昵称：</span><span id="nick_name"></span>
+                    </div>
+                    <span>昵称：</span><input id="form_nick_name" type="text" /> 
+                    <button class="btn btn-sm btn-info" id="change_btn">修改昵称</button>
+                </div>
+                <div class="chat-box">
+                    <ul class="chat-list" id="chat_list">
+                        <!-- <li>
+                            <div class="message">
+                                <span class="time">7:05:13</span>
+                                <span class="name"><i>youyouknow</i></span>
+                                <span class="detail"><i>我说什么了我</i></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="message-box">
+                                <span class="default">会话消息</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="message me">
+                                <span class="time">7:06:15</span>
+                                <span class="name"><i>memewhy</i></span>
+                                <span class="detail"><i>我说什么了我</i></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="message">
+                                <span class="time">7:05:13</span>
+                                <span class="name"><i>youyouknow</i></span>
+                                <span class="detail"><i>我说什么了我</i></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="message me">
+                                <span class="time">7:06:15</span>
+                                <span class="name"><i>memewhy</i></span>
+                                <span class="detail"><i>我说什么了我</i></span>
+                            </div>
+                        </li> -->
+                    </ul>
+                </div>
+                <div class="send-box">
+                    <form role="form" id="chat_form" onsubmit="return false;">
+                        <div class="form-group">
+                            <textarea class="form-control" id="form_message" name="message"
+                                   placeholder="说点什么..." autofocus></textarea>
+                        </div>
+                        <button type="button" id="send" class="btn btn-primary">
+                            发送消息
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <div class="container">
+                <div class="blog-box">
+                    <div class="img-box">
+                        <a href="http://www.chenlong.website" target="_blank">
+                            <img src="./img/logo.jpg">
+                        </a>
+                    </div>
+                    <div class="blog-name">
+                        <a href="http://www.chenlong.website" target="_blank">
+                            BigWave
+                        </a>
+                    </div>
+                </div>
+                <div class="page-detail">
+                    基于websocket的实时聊天小demo，这里感谢
+                    <a href="http://www.cnblogs.com/stoneniqiu/" target="_blank">stoneniqiu的文章</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./js/layer/layer.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>

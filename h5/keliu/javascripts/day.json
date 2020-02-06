@@ -1,0 +1,246 @@
+{
+    "ok": true,
+    "servertime": 1515726558,
+    "data":
+    {
+        "total": 580036,
+        "older": 2000,
+        "newer": 3000,
+        "m5": 100,
+        "flux": [
+        {
+            "time": 0,
+            "total": 10
+        },
+        {
+            "time": 1,
+            "total": 94
+        },
+        {
+            "time": 2,
+            "total": 20
+        },
+        {
+            "time": 3,
+            "total": 22
+        },
+        {
+            "time": 4,
+            "total": 35
+        },
+        {
+            "time": 5,
+            "total": 22
+        },
+        {
+            "time": 6,
+            "total": 92
+        },
+        {
+            "time": 7,
+            "total": 83
+        },
+        {
+            "time": 8,
+            "total": 71
+        },
+        {
+            "time": 9,
+            "total": 60
+        },
+        {
+            "time": 10,
+            "total": 30
+        },
+        {
+            "time": 11,
+            "total": 10
+        },
+        {
+            "time": 12,
+            "total": 5
+        },
+        {
+            "time": 13,
+            "total": 7
+        },
+        {
+            "time": 14,
+            "total": 90
+        },
+        {
+            "time": 15,
+            "total": 2
+        },
+        {
+            "time": 16,
+            "total": 30
+        },
+        {
+            "time": 17,
+            "total": 50
+        },
+        {
+            "time": 18,
+            "total": 55
+        },
+        {
+            "time": 19,
+            "total": 34
+        },
+        {
+            "time": 20,
+            "total": 31
+        },
+        {
+            "time": 21,
+            "total": 28
+        },
+        {
+            "time": 22,
+            "total": 34
+        },
+        {
+            "time": 23,
+            "total": 60
+        }],
+        "consumer": [
+        {
+            "time": 0,
+            "older": 10,
+            "newer": 20
+        },
+        {
+            "time": 1,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 2,
+            "older": 30,
+            "newer": 50
+        },
+        {
+            "time": 3,
+            "older": 70,
+            "newer": 70
+        },
+        {
+            "time": 4,
+            "older": 80,
+            "newer": 12
+        },
+        {
+            "time": 5,
+            "older": 13,
+            "newer": 18
+        },
+        {
+            "time": 6,
+            "older": 16,
+            "newer": 30
+        },
+        {
+            "time": 7,
+            "older": 30,
+            "newer": 2
+        },
+        {
+            "time": 8,
+            "older": 33,
+            "newer": 35
+        },
+        {
+            "time": 9,
+            "older": 30,
+            "newer": 0
+        },
+        {
+            "time": 10,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 11,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 12,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 13,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 14,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 15,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 16,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 17,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 18,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 19,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 20,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 21,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 22,
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": 23,
+            "older": 60,
+            "newer": 90
+        }],
+        "brand": [
+        {
+            "value": 20,
+            "name": "苹果"
+        },
+        {
+            "value": 30,
+            "name": "小米"
+        },
+        {
+            "value": 50,
+            "name": "华为"
+        }],
+        "nearby": 0,
+        "scanUrl": "http://testmob.to-ok.com.cn/api/user_scan",
+        "members": []
+    },
+    "hasmore": false
+}

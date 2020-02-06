@@ -1,0 +1,105 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		body{
+			counter-reset: tki tkl 5;
+		}
+		.test{
+			color: green;
+		}
+		.test:before{
+			content: '老子是大哥MAN';
+			color: purple;
+		}
+		.test:after{
+			counter-increment: tki +2 tkl -2;
+			content: '计数器: ' counter(tki) '我不信：' counter(tkl);
+			width: 100px;
+			color: mediumvioletred;
+		}
+
+		.test2{
+			color: green;
+			quotes: "<<" ">>";
+		}
+		.test2:before{
+			content:open-quote;
+			color: purple;
+		}
+		.test2:after{
+			content: close-quote;
+			color: mediumvioletred;
+		}
+		p:lang(zh){quotes: "«" "»" "‹" "›" }   
+		p:lang(en){quotes: "“" "”" "‘" "‘" }   
+		span:before{   
+		    content:no-open-quote;   
+		    }   
+		span:after{   
+		    content:no-close-quote;   
+		    }   
+		p:before{   
+		    content:open-quote;   
+		    }   
+		p:after{   
+		    content:close-quote;   
+		    }  
+
+		    ol {
+		      counter-reset: section;                /* Creates a new instance of the
+		                                                section counter with each ol
+		                                                element */
+		      list-style-type: none;
+		    }
+
+		    li::before {
+		      counter-increment: section;            /* Increments only this instance
+		                                                of the section counter */
+		      content: counters(section,"-") " ";    /* Adds the value of all instances
+		                                                of the section counter separated
+		                                                by a ".". */
+		                                             /* if you need to support < IE8 then
+		                                                make sure there is no space after 
+		                                                the ',' */
+		    }
+	</style>
+</head>
+<body>
+  <div class="test">Here is a title!</div>
+  <div class="test">Here is a title!</div>
+  <div class="test">Here is a title!</div>
+  <div class="test">Here is a title!</div>
+
+  <span><p lang="en">English</p></span>  
+  <span><p lang="zh">中文</p></span>  
+
+  <ol>
+    <li>item</li>          <!-- 1     -->
+    <li>item               <!-- 2     -->
+      <ol>
+        <li>item</li>      <!-- 2.1   -->
+        <li>item</li>      <!-- 2.2   -->
+        <li>item           <!-- 2.3   -->
+          <ol>
+            <li>item</li>  <!-- 2.3.1 -->
+            <li>item</li>  <!-- 2.3.2 -->
+          </ol>
+          <ol>
+            <li>item</li>  <!-- 2.3.1 -->
+            <li>item</li>  <!-- 2.3.2 -->
+            <li>item</li>  <!-- 2.3.3 -->
+          </ol>
+        </li>
+        <li>item</li>      <!-- 2.4   -->
+      </ol>
+    </li>
+    <li>item</li>          <!-- 3     -->
+    <li>item</li>          <!-- 4     -->
+  </ol>
+  <ol>
+    <li>item</li>          <!-- 1     -->
+    <li>item</li>          <!-- 2     -->
+  </ol>
+</body>
+</html>

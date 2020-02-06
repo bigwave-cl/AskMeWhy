@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="canvas" width="350" height="300"></canvas>
+	<div style="display:none;">
+	  <img id="source" src="./test.png"
+	       width="352" height="240">
+	</div>
+	<script type="text/javascript">
+		var img = new Image(); // 创建img元素
+		img.onload = function() {
+			// 设置图片源地址
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			ctx.drawImage(img,2,0,18,18,0,0,18,18);
+		};
+		img.src = './test3.png';
+	</script>
+</body>
+</html>

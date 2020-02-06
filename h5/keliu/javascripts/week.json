@@ -1,0 +1,97 @@
+{
+    "ok": true,
+    "servertime": 1515726558,
+    "data":
+    {
+        "total": 5800368,
+        "older": 20189,
+        "newer": 300236,
+        "m5": 101,
+        "flux": [
+        {
+            "time": "1/5",
+            "total": 10
+        },
+        {
+            "time": "1/6",
+            "total": 94
+        },
+        {
+            "time": "1/7",
+            "total": 20
+        },
+        {
+            "time": "1/8",
+            "total": 22
+        },
+        {
+            "time": "1/9",
+            "total": 35
+        },
+        {
+            "time": "1/10",
+            "total": 22
+        },
+        {
+            "time": "1/11",
+            "total": 92
+        }],
+        "consumer": [
+        {
+            "time": "1/5",
+            "older": 10,
+            "newer": 20
+        },
+        {
+            "time": "1/6",
+            "older": 0,
+            "newer": 0
+        },
+        {
+            "time": "1/7",
+            "older": 30,
+            "newer": 50
+        },
+        {
+            "time": "1/8",
+            "older": 70,
+            "newer": 70
+        },
+        {
+            "time": "1/9",
+            "older": 80,
+            "newer": 12
+        },
+        {
+            "time": "1/10",
+            "older": 13,
+            "newer": 18
+        },
+        {
+            "time": "1/11",
+            "older": 16,
+            "newer": 30
+        }],
+        "brand": [
+        {
+            "value": 20,
+            "name": "苹果"
+        },
+        {
+            "value": 30,
+            "name": "小米"
+        },
+        {
+            "value": 50,
+            "name": "华为"
+        },
+        {
+            "value": 10,
+            "name": "Vivo"
+        }],
+        "nearby": 0,
+        "scanUrl": "http://testmob.to-ok.com.cn/api/user_scan",
+        "members": []
+    },
+    "hasmore": false
+}

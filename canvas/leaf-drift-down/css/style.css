@@ -1,0 +1,17 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #191c20;
+}
+
+
+.no-support {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: #474443;
+}
